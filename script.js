@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
 // ===== PROJECTS DATA (For Console Display) =====
+// ===== PROJECTS INFO (For Console Display) =====
 console.log("🚀 My Projects:");
 console.log("🌤️ WeatherPro: https://Hassanbutt67.github.io/weather-app");
-console.log("✅ Task Manager: https://Hassanbutt67.github.io/task-manager");
-console.log("🚀 Portfolio: https://Hassanbutt67.github.io");});
+console.log("✅ Task Manager: https://hassanbutt67.github.io/Task-Manager-App/");
+console.log("🚀 Portfolio: https://Hassanbutt67.github.io");
