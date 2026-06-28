@@ -9,6 +9,85 @@
 </head>
 <body>
 
+    <!-- ===== 3D HERO SCENE ===== -->
+    <section id="hero">
+        <div class="scene-container">
+            <!-- Animated Background Orbs -->
+            <div class="bg-orbs">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+            </div>
+
+            <!-- Floating Particles -->
+            <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <!-- 3D Card -->
+            <div class="card-3d" id="card3d">
+                <div class="card-inner">
+                    <!-- Badge -->
+                    <div class="badge">✦ Full-Stack Developer</div>
+
+                    <!-- Avatar with glow -->
+                    <div class="avatar-wrapper">
+                        <div class="avatar-glow"></div>
+                        <div class="avatar">👨‍💻</div>
+                    </div>
+
+                    <!-- Name & Title -->
+                    <h1 class="name">Hassan Butt</h1>
+                    <p class="title">
+                        <span class="highlight">Software Engineering</span> Student & 
+                        <span class="highlight">Freelance</span> Developer
+                    </p>
+
+                    <!-- Location -->
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>COMSATS University Sahiwal, Pakistan</span>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">2nd</span>
+                            <span class="stat-label">Year</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2+</span>
+                            <span class="stat-label">Years Exp</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i> View My Work
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-paper-plane"></i> Hire Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== NAVIGATION ===== -->
     <nav>
         <div class="container">
@@ -20,32 +99,11 @@
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
     </nav>
-
-    <!-- ===== HERO SECTION ===== -->
-    <header id="hero">
-        <div class="container hero-content">
-            <div class="hero-text">
-                <p class="subtitle">Hello, I'm</p>
-                <h1>Hassan Butt</h1>
-                <p class="tagline"><span class="highlight">Software Engineering</span> Student & <span class="highlight">Freelance</span> Developer</p>
-                <p class="description">Building digital solutions | COMSATS University Sahiwal</p>
-                <div class="hero-stats-mini">
-                    <span>🎓 2nd Year</span>
-                    <span>💼 2+ Years Experience</span>
-                    <span>🚀 5+ Projects</span>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn primary">View My Work</a>
-                    <a href="#contact" class="btn secondary">Hire Me</a>
-                </div>
-            </div>
-            <div class="hero-avatar">
-                <div class="avatar-placeholder">👨‍💻</div>
-            </div>
-        </div>
-    </header>
 
     <!-- ===== ABOUT SECTION ===== -->
     <section id="about" class="section">
@@ -91,7 +149,7 @@
         </div>
     </section>
 
-    <!-- ===== EXPERIENCE SECTION (UPDATED - 2 YEARS) ===== -->
+    <!-- ===== EXPERIENCE SECTION ===== -->
     <section id="experience" class="section">
         <div class="container">
             <h2 class="section-title">Experience</h2>
@@ -126,7 +184,7 @@
         </div>
     </section>
 
-          <!-- ===== PROJECTS SECTION ===== -->
+    <!-- ===== PROJECTS SECTION ===== -->
     <section id="projects" class="section alt-bg">
         <div class="container">
             <h2 class="section-title">My Projects</h2>
@@ -192,7 +250,9 @@
 
             </div>
         </div>
-    </section>    <!-- ===== CONTACT SECTION ===== -->
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
