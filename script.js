@@ -1,4 +1,4 @@
-// ===== SMOOTH SCROLL FOR NAV LINKS =====
+// ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -16,28 +16,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const themeToggle = document.getElementById('themeToggle');
 
 if (themeToggle) {
-    // Load saved theme from localStorage
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    
-    // Update icon
     const icon = themeToggle.querySelector('i');
     icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 
-    // Toggle theme on click
     themeToggle.addEventListener('click', () => {
         const html = document.documentElement;
         const currentTheme = html.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        // Apply theme
         html.setAttribute('data-theme', newTheme);
-        
-        // Update icon
         const icon = themeToggle.querySelector('i');
         icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        
-        // Save to localStorage
         localStorage.setItem('theme', newTheme);
     });
 }
@@ -47,36 +37,27 @@ const card = document.getElementById('card3d');
 const heroSection = document.getElementById('hero');
 
 if (card && heroSection) {
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
     let isTouching = false;
 
-    // Mouse tracking
     heroSection.addEventListener('mousemove', (e) => {
         const rect = heroSection.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-
         targetX = (x - centerX) / centerX;
         targetY = -(y - centerY) / centerY;
     });
 
-    // Touch tracking
     heroSection.addEventListener('touchstart', (e) => {
         isTouching = true;
         const touch = e.touches[0];
         const rect = heroSection.getBoundingClientRect();
         const x = touch.clientX - rect.left;
         const y = touch.clientY - rect.top;
-
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-
         targetX = (x - centerX) / centerX;
         targetY = -(y - centerY) / centerY;
     });
@@ -87,10 +68,8 @@ if (card && heroSection) {
         const rect = heroSection.getBoundingClientRect();
         const x = touch.clientX - rect.left;
         const y = touch.clientY - rect.top;
-
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-
         targetX = (x - centerX) / centerX;
         targetY = -(y - centerY) / centerY;
     });
@@ -101,43 +80,23 @@ if (card && heroSection) {
         targetY = 0;
     });
 
-    // Reset on mouse leave
     heroSection.addEventListener('mouseleave', () => {
         targetX = 0;
         targetY = 0;
     });
 
-    // Smooth animation loop
     function animateTilt() {
-        // Smooth follow
         currentX += (targetX - currentX) * 0.08;
         currentY += (targetY - currentY) * 0.08;
-
-        // Apply rotation
-        const rotateX = currentY * 10;
-        const rotateY = currentX * 10;
-
-        card.style.transform = `
-            rotateX(${rotateX}deg) 
-            rotateY(${rotateY}deg) 
-            scale(1)
-        `;
-
-        // Dynamic shadow
-        const shadowX = currentX * 15;
-        const shadowY = currentY * 15;
-        card.style.boxShadow = `
-            ${shadowX}px ${shadowY}px 60px rgba(0,0,0,0.3),
-            0 0 60px rgba(108,99,255,0.1)
-        `;
-
+        const rotateX = currentY * 8;
+        const rotateY = currentX * 8;
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1)`;
         requestAnimationFrame(animateTilt);
     }
-
     animateTilt();
 }
 
-// ===== CONSOLE GREETING =====
+// ===== CONSOLE =====
 console.log("👋 Hey there! Thanks for checking out Hassan Butt's portfolio.");
 console.log("📧 Email: butthaan971@gmail.com");
 console.log("🐙 GitHub: https://github.com/Hassanbutt67");
@@ -146,7 +105,6 @@ console.log("📱 Phone: 0323-6852148");
 console.log("🎓 COMSATS University Sahiwal - Software Engineering (2nd Year)");
 console.log("💼 2+ Years Freelance Experience");
 console.log("🚀 Available for freelance projects!");
-console.log("🌓 Theme: " + (document.documentElement.getAttribute('data-theme') || 'light'));
 
 // ===== PAGE LOAD ANIMATION =====
 document.addEventListener('DOMContentLoaded', () => {
