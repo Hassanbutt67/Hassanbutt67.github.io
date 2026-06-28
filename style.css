@@ -12,6 +12,7 @@
     --bg-secondary: #FFFFFF;
     --bg-dark: #F1F5F9;
     --bg-card: #FFFFFF;
+    --bg-input: #F1F5F9;
     
     --text-primary: #0F172A;
     --text-secondary: #475569;
@@ -39,6 +40,7 @@
     --bg-secondary: #1E293B;
     --bg-dark: #0F172A;
     --bg-card: #1E293B;
+    --bg-input: #334155;
     
     --text-primary: #F8FAFC;
     --text-secondary: #CBD5E1;
@@ -315,6 +317,7 @@ nav .container {
     50% { opacity: 0.8; }
     100% { transform: translateY(-100vh) scale(0); opacity: 0; }
 }
+
 /* ========================================
    AVATAR / DP STYLES
    ======================================== */
@@ -391,6 +394,7 @@ nav .container {
     transform: scale(1.15);
     transition: all 0.4s ease;
 }
+
 /* ========================================
    3D CARD - EXACT STRUCTURE
    ======================================== */
@@ -601,6 +605,7 @@ nav .container {
     border-radius: 4px;
 }
 
+/* ===== ABOUT ===== */
 .about-content {
     max-width: 800px;
     margin: 0 auto;
@@ -619,6 +624,7 @@ nav .container {
     color: var(--text-primary);
 }
 
+/* ===== SKILLS ===== */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -654,6 +660,7 @@ nav .container {
     color: var(--text-secondary);
 }
 
+/* ===== EXPERIENCE ===== */
 .experience-timeline {
     display: grid;
     grid-template-columns: 1fr;
@@ -718,6 +725,7 @@ nav .container {
     font-weight: bold;
 }
 
+/* ===== PROJECTS ===== */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -807,6 +815,7 @@ nav .container {
     margin-right: 0.3rem;
 }
 
+/* ===== CONTACT ===== */
 .contact-links {
     display: flex;
     flex-wrap: wrap;
@@ -842,6 +851,7 @@ nav .container {
     font-size: 1.1rem;
 }
 
+/* ===== FOOTER ===== */
 footer {
     background: var(--bg-dark);
     color: var(--text-light);
@@ -855,133 +865,6 @@ footer p {
     margin-bottom: 0.3rem;
 }
 
-/* ========================================
-   RESPONSIVE
-   ======================================== */
-@media (max-width: 992px) {
-    .card-3d {
-        padding: 2.5rem 2rem;
-    }
-    .name {
-        font-size: 2.8rem;
-    }
-}
-
-@media (max-width: 768px) {
-    nav .container {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-
-    .nav-links {
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    .nav-links a {
-        font-size: 0.8rem;
-    }
-
-    .card-3d {
-        padding: 2rem 1.5rem;
-        width: 95%;
-    }
-
-    .name {
-        font-size: 2.2rem;
-    }
-
-    .title {
-        font-size: 1rem;
-    }
-
-    .hero-stats {
-        gap: 1.5rem;
-    }
-
-    .stat-number {
-        font-size: 1.5rem;
-    }
-
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .experience-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .experience-info ul li {
-        text-align: left;
-    }
-
-    .contact-links {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .contact-item {
-        width: 100%;
-        max-width: 300px;
-        justify-content: center;
-    }
-
-    .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    }
-
-    .section {
-        padding: 3rem 0;
-    }
-
-    .container {
-        padding: 0 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .card-3d {
-        padding: 1.5rem 1rem;
-    }
-
-    .name {
-        font-size: 1.8rem;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .btn {
-        width: 100%;
-        justify-content: center;
-        padding: 0.7rem 1.5rem;
-        font-size: 0.85rem;
-    }
-
-    .hero-stats {
-        gap: 1rem;
-    }
-
-    .stat-number {
-        font-size: 1.3rem;
-    }
-
-    .section-title {
-        font-size: 1.6rem;
-    }
-
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 /* ========================================
    ⭐ STARS / SPARKLES BACKGROUND
    ======================================== */
@@ -1151,4 +1034,145 @@ footer p {
 
 [data-theme="light"] .sparkle {
     background: #1a1a2e;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 992px) {
+    .card-3d {
+        padding: 2.5rem 2rem;
+    }
+    .name {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    nav .container {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+
+    .card-3d {
+        padding: 2rem 1.5rem;
+        width: 95%;
+    }
+
+    .name {
+        font-size: 2.2rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .hero-stats {
+        gap: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .experience-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .experience-info ul li {
+        text-align: left;
+    }
+
+    .contact-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-item {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .section {
+        padding: 3rem 0;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .orb-1 { width: 250px; height: 250px; }
+    .orb-2 { width: 200px; height: 200px; }
+    .orb-3 { width: 180px; height: 180px; }
+}
+
+@media (max-width: 480px) {
+    .card-3d {
+        padding: 1.5rem 1rem;
+    }
+
+    .name {
+        font-size: 1.8rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.7rem 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .hero-stats {
+        gap: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.3rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .avatar-wrapper {
+        width: 90px;
+        height: 90px;
+    }
+
+    .avatar {
+        font-size: 2.8rem;
+    }
 }
