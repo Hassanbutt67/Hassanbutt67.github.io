@@ -12,19 +12,50 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById('themeToggle');
+
+if (themeToggle) {
+    // Load saved theme from localStorage
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    // Update icon
+    const icon = themeToggle.querySelector('i');
+    icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+    // Toggle theme on click
+    themeToggle.addEventListener('click', () => {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Apply theme
+        html.setAttribute('data-theme', newTheme);
+        
+        // Update icon
+        const icon = themeToggle.querySelector('i');
+        icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        
+        // Save to localStorage
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
 // ===== 3D TILT EFFECT =====
 const card = document.getElementById('card3d');
-const scene = document.querySelector('.scene-container');
+const heroSection = document.getElementById('hero');
 
-if (card && scene) {
+if (card && heroSection) {
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
+    let isTouching = false;
 
     // Mouse tracking
-    scene.addEventListener('mousemove', (e) => {
-        const rect = scene.getBoundingClientRect();
+    heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
@@ -35,43 +66,11 @@ if (card && scene) {
         targetY = -(y - centerY) / centerY;
     });
 
-    // Smooth animation loop
-    function animateTilt() {
-        currentX += (targetX - currentX) * 0.08;
-        currentY += (targetY - currentY) * 0.08;
-
-        const rotateX = currentY * 12;
-        const rotateY = currentX * 12;
-
-        card.style.transform = `
-            rotateX(${rotateX}deg) 
-            rotateY(${rotateY}deg) 
-            scale(1)
-        `;
-
-        // Dynamic shadow
-        const shadowX = currentX * 20;
-        const shadowY = currentY * 20;
-        card.style.boxShadow = `
-            ${shadowX}px ${shadowY}px 60px rgba(0,0,0,0.5),
-            0 0 60px rgba(108,99,255,0.15)
-        `;
-
-        requestAnimationFrame(animateTilt);
-    }
-
-    animateTilt();
-
-    // Reset on leave
-    scene.addEventListener('mouseleave', () => {
-        targetX = 0;
-        targetY = 0;
-    });
-
-    // Touch support
-    scene.addEventListener('touchmove', (e) => {
+    // Touch tracking
+    heroSection.addEventListener('touchstart', (e) => {
+        isTouching = true;
         const touch = e.touches[0];
-        const rect = scene.getBoundingClientRect();
+        const rect = heroSection.getBoundingClientRect();
         const x = touch.clientX - rect.left;
         const y = touch.clientY - rect.top;
 
@@ -82,33 +81,60 @@ if (card && scene) {
         targetY = -(y - centerY) / centerY;
     });
 
-    scene.addEventListener('touchend', () => {
+    heroSection.addEventListener('touchmove', (e) => {
+        if (!isTouching) return;
+        const touch = e.touches[0];
+        const rect = heroSection.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        targetX = (x - centerX) / centerX;
+        targetY = -(y - centerY) / centerY;
+    });
+
+    heroSection.addEventListener('touchend', () => {
+        isTouching = false;
         targetX = 0;
         targetY = 0;
     });
-}
 
-// ===== THEME TOGGLE =====
-const themeToggle = document.getElementById('themeToggle');
-
-if (themeToggle) {
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    const icon = themeToggle.querySelector('i');
-    icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
-    themeToggle.addEventListener('click', () => {
-        const html = document.documentElement;
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        
-        const icon = themeToggle.querySelector('i');
-        icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        
-        localStorage.setItem('theme', newTheme);
+    // Reset on mouse leave
+    heroSection.addEventListener('mouseleave', () => {
+        targetX = 0;
+        targetY = 0;
     });
+
+    // Smooth animation loop
+    function animateTilt() {
+        // Smooth follow
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
+
+        // Apply rotation
+        const rotateX = currentY * 10;
+        const rotateY = currentX * 10;
+
+        card.style.transform = `
+            rotateX(${rotateX}deg) 
+            rotateY(${rotateY}deg) 
+            scale(1)
+        `;
+
+        // Dynamic shadow
+        const shadowX = currentX * 15;
+        const shadowY = currentY * 15;
+        card.style.boxShadow = `
+            ${shadowX}px ${shadowY}px 60px rgba(0,0,0,0.3),
+            0 0 60px rgba(108,99,255,0.1)
+        `;
+
+        requestAnimationFrame(animateTilt);
+    }
+
+    animateTilt();
 }
 
 // ===== CONSOLE GREETING =====
@@ -120,17 +146,18 @@ console.log("📱 Phone: 0323-6852148");
 console.log("🎓 COMSATS University Sahiwal - Software Engineering (2nd Year)");
 console.log("💼 2+ Years Freelance Experience");
 console.log("🚀 Available for freelance projects!");
+console.log("🌓 Theme: " + (document.documentElement.getAttribute('data-theme') || 'light'));
 
 // ===== PAGE LOAD ANIMATION =====
 document.addEventListener('DOMContentLoaded', () => {
-    const hero = document.querySelector('.card-3d');
-    if (hero) {
-        hero.style.opacity = '0';
-        hero.style.transform = 'translateY(30px)';
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
         setTimeout(() => {
-            hero.style.transition = 'all 0.8s ease-out';
-            hero.style.opacity = '1';
-            hero.style.transform = 'translateY(0)';
-        }, 200);
-    }
+            section.style.transition = 'all 0.6s ease-out';
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }, 200 + index * 100);
+    });
 });
