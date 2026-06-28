@@ -119,3 +119,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 200 + index * 100);
     });
 });
+// ========================================
+// ⭐ DYNAMIC STARS GENERATOR
+// ========================================
+
+function createDynamicStars() {
+    const container = document.querySelector('.stars-container');
+    if (!container) return;
+
+    // Remove existing stars (keep shooting stars and sparkles)
+    const existingStars = container.querySelectorAll('.star');
+    existingStars.forEach(star => star.remove());
+
+    // Create 40-60 additional stars
+    const starCount = Math.floor(Math.random() * 20) + 40;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // Random position
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        
+        // Random size (1-5px)
+        const size = Math.random() * 4 + 1;
+        
+        // Random animation duration (2-6s)
+        const duration = Math.random() * 4 + 2;
+        
+        // Random delay (0-5s)
+        const delay = Math.random() * 5;
+        
+        star.style.cssText = `
+            top: ${top}%;
+            left: ${left}%;
+            width: ${size}px;
+            height: ${size}px;
+            --duration: ${duration}s;
+            animation-delay: ${delay}s;
+        `;
+        
+        container.appendChild(star);
+    }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', createDynamicStars);
