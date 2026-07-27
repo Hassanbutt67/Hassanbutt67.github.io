@@ -314,50 +314,45 @@
         </div>
     </section>
 
-    <!-- ===== AI INSIGHTS SECTION ===== -->
-    <section class="ai-insights" id="ai-insights">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">AI Insights</span>
-                <h2 class="section-title">🤖 AI Career Insights</h2>
-                <p class="section-desc">Get personalized career recommendations powered by AI</p>
-            </div>
+   <!-- ===== AI INSIGHTS SECTION ===== -->
+<section class="ai-insights" id="ai-insights">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">AI Insights</span>
+            <h2 class="section-title">🤖 AI Career Insights</h2>
+            <p class="section-desc">Get personalized career recommendations powered by AI</p>
+        </div>
 
-            <div class="ai-container">
-                <div class="ai-card">
-                    <div class="ai-input-group">
-                        <textarea id="aiPrompt" rows="4" placeholder="Ask me anything about Hassan's skills, experience, or career..."></textarea>
-                        <div class="ai-actions">
-                            <button id="aiGenerateBtn" class="btn btn-primary">
-                                <i class="fas fa-sparkles"></i> Generate Insights
-                            </button>
-                            <button id="setApiKeyBtn" class="btn btn-secondary" style="padding: 0.75rem 1.2rem;">
-                                <i class="fas fa-key"></i> Set API Key
-                            </button>
-                        </div>
+        <div class="ai-container">
+            <div class="ai-card">
+                <div class="ai-input-group">
+                    <textarea id="aiPrompt" rows="4" placeholder="Ask me anything about Hassan's skills, experience, or career..."></textarea>
+                    <button id="aiGenerateBtn" class="btn btn-primary">
+                        <i class="fas fa-sparkles"></i> Generate Insights
+                    </button>
+                </div>
+                
+                <div class="ai-response" id="aiResponse" style="display: none;">
+                    <div class="ai-loading" id="aiLoading">
+                        <div class="spinner"></div>
+                        <p>Analyzing skills and generating insights...</p>
                     </div>
-                    
-                    <div class="ai-response" id="aiResponse" style="display: none;">
-                        <div class="ai-loading" id="aiLoading">
-                            <div class="spinner"></div>
-                            <p>Analyzing skills and generating insights...</p>
-                        </div>
-                        <div class="ai-result" id="aiResult"></div>
-                    </div>
+                    <div class="ai-result" id="aiResult"></div>
+                </div>
 
-                    <div class="ai-suggestions">
-                        <p class="suggestions-label">💡 Try asking:</p>
-                        <div class="suggestion-chips">
-                            <button class="chip" data-question="What are Hassan's top skills?">Top Skills</button>
-                            <button class="chip" data-question="What kind of projects has Hassan built?">Projects</button>
-                            <button class="chip" data-question="What career advice for a software engineer?">Career Advice</button>
-                            <button class="chip" data-question="Why hire Hassan as a freelancer?">Why Hire?</button>
-                        </div>
+                <div class="ai-suggestions">
+                    <p class="suggestions-label">💡 Try asking:</p>
+                    <div class="suggestion-chips">
+                        <button class="chip" data-question="What are Hassan's top skills?">Top Skills</button>
+                        <button class="chip" data-question="What kind of projects has Hassan built?">Projects</button>
+                        <button class="chip" data-question="What career advice for a software engineer?">Career Advice</button>
+                        <button class="chip" data-question="Why hire Hassan as a freelancer?">Why Hire?</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- ===== CONTACT SECTION ===== -->
     <section class="contact" id="contact">
