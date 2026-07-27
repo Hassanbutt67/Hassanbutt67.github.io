@@ -35,7 +35,7 @@ This portfolio provides:
 
 ## 🔗 Live URL
 
-**[https://portfolio.vercel.app](https://portfolio.vercel.app)**
+**[portfolio-2026-2ht4nqstd-hassanbutt67s-projects.vercel.app](portfolio-2026-2ht4nqstd-hassanbutt67s-projects.vercel.app)**
 
 ---
 
