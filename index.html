@@ -16,20 +16,15 @@
 
     <!-- ===== BACKGROUND EFFECTS ===== -->
     <div class="bg-effects">
-        <!-- Gradient Orbs -->
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
         <div class="orb orb-4"></div>
-        
-        <!-- Floating Shapes -->
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
         <div class="shape shape-3"></div>
         <div class="shape shape-4"></div>
         <div class="shape shape-5"></div>
-        
-        <!-- Particle Network -->
         <canvas id="particleCanvas"></canvas>
     </div>
 
@@ -42,6 +37,7 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#ai-insights">AI Insights</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -53,7 +49,6 @@
     <!-- ===== HERO SECTION ===== -->
     <section class="hero" id="home">
         <div class="container hero-container">
-            <!-- 3D Tilt Card -->
             <div class="hero-content" id="heroCard">
                 <span class="hero-badge">👋 Available for Freelance</span>
                 <h1 class="hero-title">
@@ -108,7 +103,6 @@
                 </div>
             </div>
 
-            <!-- 3D Floating Avatar with 3 Badges -->
             <div class="hero-image">
                 <div class="scene-3d">
                     <div class="profile-avatar" id="avatar3d">
@@ -119,9 +113,6 @@
                     </div>
                 </div>
                 
-                <!-- ==== 3 FLOATING BADGES ==== -->
-                
-                <!-- Badge 1: 2+ Years Experience -->
                 <div class="floating-badge badge-1" data-depth="0.3">
                     <div class="badge-icon">
                         <i class="fas fa-code"></i>
@@ -132,7 +123,6 @@
                     </div>
                 </div>
 
-                <!-- Badge 2: 5+ Projects -->
                 <div class="floating-badge badge-2" data-depth="0.5">
                     <div class="badge-icon">
                         <i class="fas fa-rocket"></i>
@@ -143,7 +133,6 @@
                     </div>
                 </div>
 
-                <!-- Badge 3: 100% Satisfaction -->
                 <div class="floating-badge badge-3" data-depth="0.4">
                     <div class="badge-icon">
                         <i class="fas fa-trophy"></i>
@@ -321,8 +310,51 @@
                 <p class="section-desc">Some of the projects I've built</p>
             </div>
 
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Injected by JavaScript -->
+            <div class="projects-grid" id="projectsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===== AI INSIGHTS SECTION ===== -->
+    <section class="ai-insights" id="ai-insights">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">AI Insights</span>
+                <h2 class="section-title">🤖 AI Career Insights</h2>
+                <p class="section-desc">Get personalized career recommendations powered by AI</p>
+            </div>
+
+            <div class="ai-container">
+                <div class="ai-card">
+                    <div class="ai-input-group">
+                        <textarea id="aiPrompt" rows="4" placeholder="Ask me anything about Hassan's skills, experience, or career..."></textarea>
+                        <div class="ai-actions">
+                            <button id="aiGenerateBtn" class="btn btn-primary">
+                                <i class="fas fa-sparkles"></i> Generate Insights
+                            </button>
+                            <button id="setApiKeyBtn" class="btn btn-secondary" style="padding: 0.75rem 1.2rem;">
+                                <i class="fas fa-key"></i> Set API Key
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-response" id="aiResponse" style="display: none;">
+                        <div class="ai-loading" id="aiLoading">
+                            <div class="spinner"></div>
+                            <p>Analyzing skills and generating insights...</p>
+                        </div>
+                        <div class="ai-result" id="aiResult"></div>
+                    </div>
+
+                    <div class="ai-suggestions">
+                        <p class="suggestions-label">💡 Try asking:</p>
+                        <div class="suggestion-chips">
+                            <button class="chip" data-question="What are Hassan's top skills?">Top Skills</button>
+                            <button class="chip" data-question="What kind of projects has Hassan built?">Projects</button>
+                            <button class="chip" data-question="What career advice for a software engineer?">Career Advice</button>
+                            <button class="chip" data-question="Why hire Hassan as a freelancer?">Why Hire?</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
