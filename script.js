@@ -345,6 +345,241 @@ window.addEventListener('scroll', () => {
 });
 
 // =============================================
+// AI INSIGHTS
+// =============================================
+
+const aiPrompt = document.getElementById('aiPrompt');
+const aiGenerateBtn = document.getElementById('aiGenerateBtn');
+const aiResponse = document.getElementById('aiResponse');
+const aiLoading = document.getElementById('aiLoading');
+const aiResult = document.getElementById('aiResult');
+const setApiKeyBtn = document.getElementById('setApiKeyBtn');
+
+// Portfolio context data
+const portfolioData = {
+    name: "Hassan Butt",
+    title: "Software Engineering Student & Freelance Developer",
+    university: "COMSATS University Sahiwal",
+    skills: ["HTML5", "CSS3", "JavaScript", "React.js", "Node.js", "Python", "Git/GitHub", "SQL", "C++"],
+    experience: [
+        "Freelance Web Developer (2023 - Present)",
+        "Full-Stack Developer (2023 - Present)"
+    ],
+    projects: [
+        "WeatherPro - Real-time weather app",
+        "Task Manager App - Full-featured task management",
+        "Portfolio Website - Personal portfolio"
+    ],
+    education: "B.S. Software Engineering (2nd Year)",
+    location: "Sahiwal, Pakistan"
+};
+
+// Set API Key
+setApiKeyBtn.addEventListener('click', () => {
+    const apiKey = prompt('Enter your OpenAI API key (starts with sk-proj-):');
+    if (apiKey && apiKey.startsWith('sk-proj-')) {
+        localStorage.setItem('openai_api_key', apiKey);
+        alert('✅ API key saved successfully!');
+    } else if (apiKey) {
+        alert('❌ Invalid API key. Please make sure it starts with "sk-proj-"');
+    }
+});
+
+// Generate AI insights
+async function generateAIInsights(prompt) {
+    const apiKey = localStorage.getItem('openai_api_key');
+    
+    // If no API key, use fallback
+    if (!apiKey) {
+        aiResponse.style.display = 'block';
+        aiLoading.style.display = 'none';
+        aiResult.style.display = 'block';
+        aiResult.innerHTML = formatAIResponse(generateFallbackInsights(prompt));
+        aiResult.innerHTML += `
+            <br><br>
+            <div style="font-size: 0.8rem; color: var(--text-light); padding: 0.5rem; background: var(--bg-secondary); border-radius: 8px; margin-top: 0.5rem;">
+                💡 <button onclick="document.getElementById('setApiKeyBtn').click()" style="background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; text-decoration: underline;">
+                    Click here</button> to add your OpenAI API key for enhanced AI insights.
+            </div>
+        `;
+        return;
+    }
+
+    // Show loading
+    aiResponse.style.display = 'block';
+    aiLoading.style.display = 'flex';
+    aiResult.style.display = 'none';
+
+    const systemPrompt = `You are a career advisor AI assistant for Hassan Butt's portfolio. 
+    ${portfolioData.name} is a ${portfolioData.title} at ${portfolioData.university}.
+    Skills: ${portfolioData.skills.join(', ')}
+    Experience: ${portfolioData.experience.join('. ')}
+    Projects: ${portfolioData.projects.join('. ')}
+    Location: ${portfolioData.location}
+    Education: ${portfolioData.education}
+    
+    Provide helpful, professional, and encouraging career advice based on this portfolio.
+    Keep responses concise (under 150 words) and actionable.`;
+
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: prompt }
+                ],
+                temperature: 0.7,
+                max_tokens: 300
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error.message);
+        }
+
+        const result = data.choices[0].message.content;
+
+        // Show result
+        aiLoading.style.display = 'none';
+        aiResult.style.display = 'block';
+        aiResult.innerHTML = formatAIResponse(result);
+
+    } catch (error) {
+        aiLoading.style.display = 'none';
+        aiResult.style.display = 'block';
+        aiResult.innerHTML = `
+            <div style="color: #EF4444; padding: 1rem; border: 1px solid #EF4444; border-radius: 8px;">
+                <strong>❌ Error:</strong> ${error.message}
+                <br><br>
+                <small>Make sure your OpenAI API key is valid and has credits.</small>
+                <br><br>
+                <button onclick="document.getElementById('setApiKeyBtn').click()" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;">
+                    Update API Key
+                </button>
+            </div>
+        `;
+    }
+}
+
+// Format AI response with markdown-like styling
+function formatAIResponse(text) {
+    // Convert bold text
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Convert bullet points
+    text = text.replace(/^- (.*?)$/gm, '<li>$1</li>');
+    text = text.replace(/^• (.*?)$/gm, '<li>$1</li>');
+    
+    if (text.includes('<li>')) {
+        text = '<ul>' + text + '</ul>';
+    }
+    
+    // Convert line breaks
+    text = text.replace(/\n/g, '<br>');
+    
+    return text;
+}
+
+// Generate insights on button click
+aiGenerateBtn.addEventListener('click', () => {
+    const prompt = aiPrompt.value.trim();
+    if (!prompt) {
+        alert('Please ask a question about the portfolio.');
+        return;
+    }
+    generateAIInsights(prompt);
+});
+
+// Auto-generate on Enter key (Ctrl+Enter)
+aiPrompt.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        aiGenerateBtn.click();
+    }
+});
+
+// Suggestion chips
+document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+        aiPrompt.value = chip.dataset.question;
+        aiGenerateBtn.click();
+    });
+});
+
+// =============================================
+// FALLBACK AI - IF NO API KEY
+// =============================================
+
+function generateFallbackInsights(prompt) {
+    const responses = {
+        'skills': `Based on Hassan's portfolio, his top skills are:
+        
+• JavaScript - Proficient in modern JS and frameworks
+• React.js - Building interactive user interfaces
+• Node.js - Backend development experience
+• Python - Versatile programming language
+• HTML5 & CSS3 - Clean, responsive designs
+
+He also has experience with Git/GitHub, SQL, and C++.`,
+
+        'projects': `Hassan has built several impressive projects:
+
+1. 🌤️ WeatherPro - Real-time weather app with API integration
+2. ✅ Task Manager App - Full CRUD operations with priority levels
+3. 🚀 Portfolio Website - Personal brand and work showcase
+
+All projects demonstrate his ability to build functional, user-friendly applications.`,
+
+        'career': `Career advice for Hassan Butt:
+
+• Leverage your freelance experience to build a strong client portfolio
+• Consider specializing in full-stack development
+• Contribute to open-source projects to expand your network
+• Build a personal brand through technical blogging
+• Your COMSATS University background is valuable - network with alumni`,
+
+        'hire': `Why hire Hassan?
+
+✅ 2+ years of freelance experience with 100% client satisfaction
+✅ Strong technical skills across multiple technologies
+✅ Self-motivated and able to work independently
+✅ Built 5+ successful projects for clients
+✅ Currently studying Software Engineering at COMSATS University
+✅ Available for freelance projects and collaborations`
+    };
+
+    const lowerPrompt = prompt.toLowerCase();
+    
+    if (lowerPrompt.includes('skill') || lowerPrompt.includes('technolog') || lowerPrompt.includes('know')) {
+        return responses.skills;
+    } else if (lowerPrompt.includes('project') || lowerPrompt.includes('build') || lowerPrompt.includes('create')) {
+        return responses.projects;
+    } else if (lowerPrompt.includes('career') || lowerPrompt.includes('advice') || lowerPrompt.includes('recommend')) {
+        return responses.career;
+    } else if (lowerPrompt.includes('hire') || lowerPrompt.includes('freelance') || lowerPrompt.includes('why')) {
+        return responses.hire;
+    } else {
+        return `Based on Hassan's portfolio:
+
+• Hassan is a Software Engineering student at COMSATS University Sahiwal
+• Has 2+ years of freelance experience
+• Specializes in web development with React, Node.js, and JavaScript
+• Built 5+ successful projects
+• Available for freelance work
+
+Ask me about his skills, projects, career advice, or why you should hire him!`;
+    }
+}
+
+// =============================================
 // CONTACT FORM
 // =============================================
 const contactForm = document.getElementById('contactForm');
@@ -445,7 +680,7 @@ window.addEventListener('scroll', () => {
 // CONSOLE
 // =============================================
 console.log('%c🚀 Hassan Butt | 3D Aesthetic Portfolio', 'font-size: 20px; font-weight: bold; color: #2563EB;');
-console.log('%c✨ Features: 3D Tilt + Floating Badges + Particle Network + Glass Morphism', 'font-size: 12px; color: #94A3B8;');
+console.log('%c✨ Features: 3D Tilt + Floating Badges + Particle Network + Glass Morphism + AI Insights', 'font-size: 12px; color: #94A3B8;');
 console.log('📧 Email: butthaan971@gmail.com');
 console.log('🐙 GitHub: https://github.com/Hassanbutt67');
 console.log('💼 LinkedIn: https://www.linkedin.com/in/hassan-butt-876558234/');
@@ -453,3 +688,4 @@ console.log('📱 Phone: 0323-6852148');
 console.log('🎓 COMSATS University Sahiwal - Software Engineering (2nd Year)');
 console.log('💼 2+ Years Freelance Experience');
 console.log('✨ Available for freelance projects!');
+console.log('🤖 AI Insights: Ask about skills, projects, or career advice!');
