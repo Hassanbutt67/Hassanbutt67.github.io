@@ -1,7 +1,7 @@
 # 🚀 Hassan Butt | Software Engineer Portfolio
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue)](https://portfolio.vercel.app)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-black)](https://github.com/Hassanbutt67/portfolio)
+[![GitHub]https://Hassanbutt67.github.io](https://Hassanbutt67.github.io)
+[![GitHub]https://Hassanbutt67.github.io](https://Hassanbutt67.github.io)
 [![MIT License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ---
