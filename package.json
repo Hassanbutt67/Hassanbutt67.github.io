@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Hassan Butt - Software Engineer Portfolio",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html --dist-dir dist",
+    "preview": "parcel serve dist"
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
