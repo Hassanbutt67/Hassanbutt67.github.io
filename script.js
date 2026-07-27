@@ -278,12 +278,8 @@ document.querySelectorAll('[data-tilt]').forEach(element => {
 });
 
 // =============================================
-// AI INSIGHTS - USING ENVIRONMENT VARIABLES
+// AI INSIGHTS - SMART FALLBACK (No API Key Needed)
 // =============================================
-
-// ✅ API KEY IS LOADED FROM ENVIRONMENT VARIABLES (Vite)
-// The key is accessed via import.meta.env.VITE_OPENAI_API_KEY
-// NO buttons to set API key!
 
 const aiPrompt = document.getElementById('aiPrompt');
 const aiGenerateBtn = document.getElementById('aiGenerateBtn');
@@ -291,7 +287,7 @@ const aiResponse = document.getElementById('aiResponse');
 const aiLoading = document.getElementById('aiLoading');
 const aiResult = document.getElementById('aiResult');
 
-// Portfolio context for fallback
+// Portfolio data for AI responses
 const portfolioData = {
     name: "Hassan Butt",
     title: "Software Engineering Student & Freelance Developer",
@@ -302,7 +298,7 @@ const portfolioData = {
         "Full-Stack Developer (2023 - Present)"
     ],
     projects: [
-        "WeatherPro - Real-time weather app",
+        "WeatherPro - Real-time weather app with API integration",
         "Task Manager App - Full-featured task management",
         "Portfolio Website - Personal portfolio"
     ],
@@ -310,80 +306,147 @@ const portfolioData = {
     location: "Sahiwal, Pakistan"
 };
 
-// ✅ Get API key from environment variables (Vite)
-// This is the ONLY place the API key is accessed
-const API_KEY = process.env.OPENAI_API_KEY;
-
-// Generate AI insights
 if (aiGenerateBtn && aiPrompt) {
-    async function generateAIInsights(prompt) {
-        // Check if API key exists
-        if (!API_KEY || API_KEY === 'undefined' || API_KEY === '') {
-            aiResponse.style.display = 'block';
-            aiLoading.style.display = 'none';
-            aiResult.style.display = 'block';
-            aiResult.innerHTML = generateFallbackInsights(prompt) + `
-                <br><br>
-                <div style="font-size: 0.8rem; color: var(--text-light); padding: 0.5rem; background: var(--bg-secondary); border-radius: 8px; margin-top: 0.5rem;">
-                    💡 API key not configured. Using fallback responses. 
-                    Set VITE_OPENAI_API_KEY in .env file for AI insights.
-                </div>
-            `;
-            return;
-        }
-
+    // Generate AI insights - Smart Fallback Mode
+    function generateAIInsights(prompt) {
+        // Show loading
         aiResponse.style.display = 'block';
         aiLoading.style.display = 'flex';
         aiResult.style.display = 'none';
 
-        try {
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    messages: [
-                        {
-                            role: 'system',
-                            content: `You are a career advisor AI assistant for Hassan Butt's portfolio. 
-                            Hassan Butt is a Software Engineering student at COMSATS University Sahiwal.
-                            He has 2+ years of freelance experience, skills in React, Node.js, JavaScript, Python, and C++.
-                            He has built 5+ projects and has 100% client satisfaction.
-                            Provide helpful, professional, and encouraging career advice based on this portfolio.
-                            Keep responses concise (under 150 words) and actionable.`
-                        },
-                        { role: 'user', content: prompt }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 300
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.error) {
-                throw new Error(data.error.message || 'OpenAI API error');
-            }
-
+        // Simulate AI processing (600ms delay for realistic feel)
+        setTimeout(() => {
+            const response = generateSmartResponse(prompt);
             aiLoading.style.display = 'none';
             aiResult.style.display = 'block';
-            aiResult.innerHTML = data.choices[0].message.content;
-        } catch (error) {
-            aiLoading.style.display = 'none';
-            aiResult.style.display = 'block';
-            aiResult.innerHTML = `
-                <div style="color: #EF4444; padding: 1rem; border: 1px solid #EF4444; border-radius: 8px;">
-                    <strong>❌ Error:</strong> ${error.message}
-                    <br><br>
-                    <small>Make sure your OpenAI API key is valid and has credits.</small>
-                </div>
-            `;
+            aiResult.innerHTML = response;
+        }, 600);
+    }
+
+    // Generate smart responses based on user input
+    function generateSmartResponse(prompt) {
+        const lowerPrompt = prompt.toLowerCase();
+        
+        // === SKILLS ===
+        if (lowerPrompt.includes('skill') || lowerPrompt.includes('technolog') || lowerPrompt.includes('know') || lowerPrompt.includes('tech stack') || lowerPrompt.includes('expertise')) {
+            return `<h3>💻 Hassan's Tech Stack</h3>
+            <ul>
+                <li><strong>JavaScript</strong> - Proficient in modern JS and frameworks</li>
+                <li><strong>React.js</strong> - Building interactive user interfaces</li>
+                <li><strong>Node.js</strong> - Backend development experience</li>
+                <li><strong>Python</strong> - Versatile programming language</li>
+                <li><strong>HTML5 & CSS3</strong> - Clean, responsive designs</li>
+                <li><strong>Git/GitHub</strong> - Version control and collaboration</li>
+                <li><strong>SQL</strong> - Database management</li>
+                <li><strong>C++</strong> - Data structures and algorithms</li>
+            </ul>
+            <p>Hassan is a well-rounded developer with both frontend and backend experience. He has <strong>2+ years</strong> of practical experience using these technologies.</p>`;
+        }
+        
+        // === PROJECTS ===
+        else if (lowerPrompt.includes('project') || lowerPrompt.includes('build') || lowerPrompt.includes('create') || lowerPrompt.includes('work') || lowerPrompt.includes('portfolio')) {
+            return `<h3>🚀 Hassan's Projects</h3>
+            <ul>
+                <li><strong>🌤️ WeatherPro</strong> - Real-time weather app with 5-day forecast, location detection, and dark/light mode using OpenWeatherMap API. <a href="https://Hassanbutt67.github.io/weather-app" target="_blank" style="color: var(--primary);">Live Demo →</a></li>
+                <li><strong>✅ Task Manager App</strong> - Full-featured task management with CRUD operations, local storage persistence, priority levels, and real-time statistics. <a href="https://hassanbutt67.github.io/Task-Manager-App/" target="_blank" style="color: var(--primary);">Live Demo →</a></li>
+                <li><strong>🚀 Portfolio Website</strong> - Personal portfolio built with HTML, CSS, and JavaScript. Features 3D effects, dark mode, and AI insights. <a href="https://Hassanbutt67.github.io" target="_blank" style="color: var(--primary);">Live Demo →</a></li>
+            </ul>
+            <p>All projects demonstrate Hassan's ability to build functional, user-friendly applications with clean code.</p>`;
+        }
+        
+        // === CAREER ADVICE ===
+        else if (lowerPrompt.includes('career') || lowerPrompt.includes('advice') || lowerPrompt.includes('recommend') || lowerPrompt.includes('future') || lowerPrompt.includes('goal')) {
+            return `<h3>💡 Career Advice for Hassan</h3>
+            <ul>
+                <li>🔹 <strong>Leverage Freelance Experience</strong> - Build a strong client portfolio with testimonials</li>
+                <li>🔹 <strong>Specialize in Full-Stack</strong> - React + Node.js is in high demand in the market</li>
+                <li>🔹 <strong>Open Source Contribution</strong> - Expand your network and visibility</li>
+                <li>🔹 <strong>Technical Blogging</strong> - Build a personal brand through content creation</li>
+                <li>🔹 <strong>Networking</strong> - Your COMSATS University background is valuable - connect with alumni</li>
+                <li>🔹 <strong>Build a Portfolio</strong> - Showcase your best work to attract clients</li>
+            </ul>
+            <p>With Hassan's skills and experience, he is well-positioned for a successful career in software development. <strong>2+ years</strong> of freelance experience with <strong>100% client satisfaction</strong> is a strong foundation.</p>`;
+        }
+        
+        // === WHY HIRE ===
+        else if (lowerPrompt.includes('hire') || lowerPrompt.includes('freelance') || lowerPrompt.includes('why') || lowerPrompt.includes('work with') || lowerPrompt.includes('collaborate')) {
+            return `<h3>✅ Why Hire Hassan?</h3>
+            <ul>
+                <li>✅ <strong>2+ years</strong> of freelance experience with <strong>100% client satisfaction</strong></li>
+                <li>✅ Strong technical skills across multiple technologies</li>
+                <li>✅ Self-motivated and able to work independently</li>
+                <li>✅ Built <strong>5+ successful projects</strong> for clients</li>
+                <li>✅ Currently studying <strong>Software Engineering</strong> at COMSATS University</li>
+                <li>✅ Available for freelance projects and collaborations</li>
+                <li>✅ Clean, maintainable code with attention to detail</li>
+            </ul>
+            <p>Hassan is a reliable, skilled developer who delivers quality work on time. He communicates clearly and understands client requirements well.</p>`;
+        }
+        
+        // === AI ===
+        else if (lowerPrompt.includes('ai') || lowerPrompt.includes('artificial intelligence') || lowerPrompt.includes('machine learning')) {
+            return `<h3>🤖 About AI in This Portfolio</h3>
+            <p>This portfolio features an AI-powered career insights system that provides personalized advice based on Hassan's skills, experience, and projects.</p>
+            <ul>
+                <li><strong>Technology:</strong> OpenAI GPT-3.5-turbo (or smart fallback mode)</li>
+                <li><strong>Purpose:</strong> Demonstrate AI integration skills</li>
+                <li><strong>Features:</strong> Smart responses about skills, projects, career advice, and freelance work</li>
+            </ul>
+            <p>💡 <strong>Try asking:</strong><br>
+            - "What are Hassan's top skills?"<br>
+            - "What kind of projects has Hassan built?"<br>
+            - "What career advice for a software engineer?"<br>
+            - "Why hire Hassan as a freelancer?"</p>`;
+        }
+        
+        // === COMSATS / UNIVERSITY ===
+        else if (lowerPrompt.includes('comsats') || lowerPrompt.includes('university') || lowerPrompt.includes('education') || lowerPrompt.includes('study')) {
+            return `<h3>🎓 Education</h3>
+            <p><strong>Hassan Butt</strong> is currently pursuing a <strong>Bachelor of Science in Software Engineering</strong> at <strong>COMSATS University Sahiwal Campus</strong>.</p>
+            <ul>
+                <li>📚 <strong>Program:</strong> B.S. Software Engineering</li>
+                <li>📅 <strong>Year:</strong> 2nd Year</li>
+                <li>🏫 <strong>University:</strong> COMSATS University Sahiwal</li>
+                <li>🎯 <strong>Focus:</strong> Building software that solves real problems</li>
+            </ul>
+            <p>Being a student at COMSATS University gives Hassan a strong foundation in software engineering principles, algorithms, and modern development practices.</p>`;
+        }
+        
+        // === WEATHER APP ===
+        else if (lowerPrompt.includes('weather') || lowerPrompt.includes('weatherpro')) {
+            return `<h3>🌤️ WeatherPro - Project Details</h3>
+            <p><strong>WeatherPro</strong> is a real-time weather application with the following features:</p>
+            <ul>
+                <li>🌡️ <strong>Real-time Weather</strong> - Current temperature, conditions, and more</li>
+                <li>📅 <strong>5-Day Forecast</strong> - Detailed forecast for the next 5 days</li>
+                <li>📍 <strong>Location Detection</strong> - Auto-detects user's location</li>
+                <li>🌙 <strong>Dark/Light Mode</strong> - Theme toggle for user comfort</li>
+                <li>🔗 <strong>API Integration</strong> - Uses OpenWeatherMap API</li>
+            </ul>
+            <p><strong>Live Demo:</strong> <a href="https://Hassanbutt67.github.io/weather-app" target="_blank" style="color: var(--primary);">https://Hassanbutt67.github.io/weather-app</a><br>
+            <strong>GitHub:</strong> <a href="https://github.com/Hassanbutt67/weather-app" target="_blank" style="color: var(--primary);">https://github.com/Hassanbutt67/weather-app</a></p>`;
+        }
+        
+        // === DEFAULT RESPONSE ===
+        else {
+            return `<h3>📋 About Hassan</h3>
+            <p><strong>Hassan Butt</strong> is a <strong>Software Engineering student</strong> at <strong>COMSATS University Sahiwal</strong> with <strong>2+ years</strong> of freelance experience.</p>
+            <ul>
+                <li>🎓 <strong>Education:</strong> B.S. Software Engineering (2nd Year)</li>
+                <li>💼 <strong>Experience:</strong> 2+ years of freelance experience</li>
+                <li>💻 <strong>Skills:</strong> React, Node.js, JavaScript, Python, and C++</li>
+                <li>🚀 <strong>Projects:</strong> Built 5+ successful projects</li>
+                <li>⭐ <strong>Client Satisfaction:</strong> 100%</li>
+            </ul>
+            <p>💡 <strong>Try asking:</strong><br>
+            - "What are Hassan's top skills?"<br>
+            - "What kind of projects has Hassan built?"<br>
+            - "What career advice for a software engineer?"<br>
+            - "Why hire Hassan as a freelancer?"</p>`;
         }
     }
 
+    // Event listeners
     aiGenerateBtn.addEventListener('click', () => {
         const prompt = aiPrompt.value.trim();
         if (!prompt) {
@@ -400,67 +463,13 @@ if (aiGenerateBtn && aiPrompt) {
         }
     });
 
+    // Chip buttons
     document.querySelectorAll('.chip').forEach(chip => {
         chip.addEventListener('click', () => {
             aiPrompt.value = chip.dataset.question;
             generateAIInsights(chip.dataset.question);
         });
     });
-}
-
-// =============================================
-// FALLBACK AI (No API Key)
-// =============================================
-
-function generateFallbackInsights(prompt) {
-    const lowerPrompt = prompt.toLowerCase();
-    
-    if (lowerPrompt.includes('skill') || lowerPrompt.includes('technolog') || lowerPrompt.includes('know')) {
-        return `Based on Hassan's portfolio, his top skills are:
-        
-• JavaScript - Proficient in modern JS and frameworks
-• React.js - Building interactive user interfaces
-• Node.js - Backend development experience
-• Python - Versatile programming language
-• HTML5 & CSS3 - Clean, responsive designs
-
-He also has experience with Git/GitHub, SQL, and C++.`;
-    } else if (lowerPrompt.includes('project') || lowerPrompt.includes('build') || lowerPrompt.includes('create')) {
-        return `Hassan has built several impressive projects:
-
-1. 🌤️ WeatherPro - Real-time weather app with API integration
-2. ✅ Task Manager App - Full CRUD operations with priority levels
-3. 🚀 Portfolio Website - Personal brand and work showcase
-
-All projects demonstrate his ability to build functional, user-friendly applications.`;
-    } else if (lowerPrompt.includes('career') || lowerPrompt.includes('advice') || lowerPrompt.includes('recommend')) {
-        return `Career advice for Hassan Butt:
-
-• Leverage your freelance experience to build a strong client portfolio
-• Consider specializing in full-stack development
-• Contribute to open-source projects to expand your network
-• Build a personal brand through technical blogging
-• Your COMSATS University background is valuable - network with alumni`;
-    } else if (lowerPrompt.includes('hire') || lowerPrompt.includes('freelance') || lowerPrompt.includes('why')) {
-        return `Why hire Hassan?
-
-✅ 2+ years of freelance experience with 100% client satisfaction
-✅ Strong technical skills across multiple technologies
-✅ Self-motivated and able to work independently
-✅ Built 5+ successful projects for clients
-✅ Currently studying Software Engineering at COMSATS University
-✅ Available for freelance projects and collaborations`;
-    } else {
-        return `Based on Hassan's portfolio:
-
-• Hassan is a Software Engineering student at COMSATS University Sahiwal
-• Has 2+ years of freelance experience
-• Specializes in web development with React, Node.js, and JavaScript
-• Built 5+ successful projects
-• Available for freelance work
-
-Ask me about his skills, projects, career advice, or why you should hire him!`;
-    }
 }
 
 // =============================================
@@ -552,7 +561,7 @@ window.addEventListener('scroll', () => {
 // CONSOLE
 // =============================================
 console.log('%c🚀 Hassan Butt | 3D Aesthetic Portfolio', 'font-size: 20px; font-weight: bold; color: #2563EB;');
-console.log('%c🔐 API Key loaded from environment variables (VITE_OPENAI_API_KEY)', 'font-size: 12px; color: #94A3B8;');
+console.log('%c✨ AI Insights - Smart Fallback Mode (No API Key Required)', 'font-size: 12px; color: #94A3B8;');
 console.log('%c✨ Features: 3D Tilt + Floating Badges + Particle Network + Glass Morphism + AI Insights', 'font-size: 12px; color: #94A3B8;');
 console.log('📧 Email: butthaan971@gmail.com');
 console.log('🐙 GitHub: https://github.com/Hassanbutt67');
