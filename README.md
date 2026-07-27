@@ -80,3 +80,12 @@ This portfolio provides:
 The AI Career Insights feature uses OpenAI's GPT-3.5-turbo to provide personalized career advice and recommendations based on my portfolio data.
 
 ### System Prompt (Original Instructions)
+<img width="957" height="440" alt="image" src="https://github.com/user-attachments/assets/da15cb01-2a5c-43a4-a7bf-64c83303c0db" />
+<img width="956" height="443" alt="image" src="https://github.com/user-attachments/assets/5494857b-310d-42d7-bdcc-9e669aab1bac" />
+<img width="952" height="394" alt="image" src="https://github.com/user-attachments/assets/b81965b9-fa7e-48c1-b4f3-cd426130f7b6" />
+<img width="791" height="400" alt="image" src="https://github.com/user-attachments/assets/0c144529-5933-48bf-8525-affc7a48b246" />
+<img width="790" height="435" alt="image" src="https://github.com/user-attachments/assets/e709b642-1717-4e8c-a136-2dcf8b337736" />
+
+<img width="767" height="409" alt="image" src="https://github.com/user-attachments/assets/dcaa6997-fa81-4f74-adbd-2514376745a5" />
+
+
